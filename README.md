@@ -1,1 +1,11 @@
-
+🚲 BikeTrailsBikeTrails è una web application leggera e performante progettata per i ciclisti. Permette di monitorare i percorsi in tempo reale, salvare le sessioni e analizzare i progressi grazie a un'interfaccia pulita e moderna.
+🌟 Caratteristiche PrincipaliReal-time Tracking: Monitoraggio della posizione tramite l'API Geolocation del browser.Data Storage: Salvataggio sicuro di tempi, distanze e percorsi in un database centralizzato.Mappe Interattive: Visualizzazione del tracciato su mappa tramite Leaflet.js.Dashboard Statistiche: Riepilogo delle attività totali e medie di velocità.Design Responsive: Interfaccia fluida su desktop e mobile grazie a Tailwind CSS.🛠️ Tech StackComponenteTecnologiaFrontendHTML5, JavaScript (ES6+)StylingTailwind CSS & Custom CSSBackendPHP 8.xDatabaseMySQLMappeLeaflet.js / OpenStreetMap🚀 Installazione e ConfigurazionePrerequisitiUn server locale come XAMPP, WAMP o MAMP.PHP >= 7.4.MySQL.PassaggiClona il progetto nella cartella htdocs (o www):Bashgit clone https://github.com/tuo-username/BikeTrails.git
+Configura il Database:Accedi a phpMyAdmin.Crea un nuovo database chiamato biketrails_db.Importa il file database.sql (se presente) o esegui le query fornite nella cartella /db.Configurazione Backend:Rinomina il file config.sample.php in config.php.Inserisci le tue credenziali MySQL (host, username, password).Avvia l'app:Apri il browser e vai su http://localhost/BikeTrails.📁 Struttura del ProgettoPlaintextBikeTrails/
+├── assets/             # Immagini e icone
+├── css/                # Custom CSS e Tailwind config
+├── js/                 # Logica frontend (mappe, tracking)
+├── includes/           # Script PHP (connessione DB, funzioni)
+├── api/                # Endpoint PHP per salvare/recuperare dati (JSON)
+├── index.php           # Pagina principale
+└── database.sql        # Schema del database MySQL
+🤝 ContribuireFai un Fork del progetto.Crea un branch per la tua modifica (git checkout -b feature/Miglioria).Fai il Commit (git commit -m 'Aggiunta nuova funzione').Fai il Push (git push origin feature/Miglioria).Apri una Pull Request.📄 LicenzaDistribuito sotto Licenza MIT. Vedi LICENSE per i dettagli.
