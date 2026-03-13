@@ -1,0 +1,92 @@
+<?php
+include 'db.php'; // Usa la connessione sicura che abbiamo creato prima
+
+// Recuperiamo tutti i percorsi ordinati dal più recente
+$query = "SELECT id, data_creazione, durata, distanza FROM percorsi ORDER BY data_creazione DESC";
+$result = $conn->query($query);
+
+// Calcolo statistiche veloci
+$stats_query = "SELECT COUNT(*) as total_corse, SUM(distanza) as total_km FROM percorsi";
+$stats_result = $conn->query($stats_query)->fetch_assoc();
+?>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storico Corse - BikeTrails</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900">
+    <div class="max-w-4xl mx-auto p-6">
+        
+        <header class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-black text-blue-600">Storico Attività</h1>
+                <p class="text-gray-500">Tutti i tuoi progressi su due ruote</p>
+            </div>
+            <a href="index.html" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">
+                ← Torna alla Mappa
+            </a>
+        </header>
+
+        <div class="grid grid-cols-2 gap-4 mb-10">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <p class="text-gray-400 uppercase text-xs font-bold tracking-widest mb-1">Distanza Totale</p>
+                <span class="text-3xl font-black text-blue-600"><?php echo number_format($stats_result['total_km'], 2); ?> <small class="text-lg">km</small></span>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <p class="text-gray-400 uppercase text-xs font-bold tracking-widest mb-1">Sessioni Totali</p>
+                <span class="text-3xl font-black text-gray-800"><?php echo $stats_result['total_corse']; ?></span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-100">
+                    <tr>
+                        <th class="p-4 font-bold text-gray-600">Data</th>
+                        <th class="p-4 font-bold text-gray-600">Distanza</th>
+                        <th class="p-4 font-bold text-gray-600">Durata</th>
+                        <th class="p-4 font-bold text-gray-600">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($result->num_rows > 0): ?>
+                        <?php while($row = $result->fetch_assoc()): ?>
+                            <tr class="border-b border-gray-50 hover:bg-blue-50/30 transition-colors">
+                                <td class="p-4">
+                                    <span class="block font-semibold">
+                                        <?php echo date('d/m/Y', strtotime($row['data_creazione'])); ?>
+                                    </span>
+                                    <span class="text-xs text-gray-400">
+                                        <?php echo date('H:i', strtotime($row['data_creazione'])); ?>
+                                    </span>
+                                </td>
+                                <td class="p-4 font-bold text-blue-600">
+                                    <?php echo $row['distanza']; ?> km
+                                </td>
+                                <td class="p-4 text-gray-600">
+                                    <?php echo $row['durata']; ?>
+                                </td>
+                                <td class="p-4">
+                                    <button onclick="alert('Funzione visualizza mappa in arrivo!')" class="text-sm font-bold text-blue-500 hover:underline">
+                                        Dettagli
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4" class="p-10 text-center text-gray-400 italic">
+                                Non hai ancora salvato alcun percorso. Inizia a pedalare!
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
